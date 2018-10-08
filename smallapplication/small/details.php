@@ -1,4 +1,4 @@
-<!-- <?php include("register.php"); ?> -->
+<?php include('register.php'); ?>
 <html>
 <head>
 <style type="text/css">
@@ -22,12 +22,6 @@
 <input type="text" name="email" required style="margin-top: 10px;width: 200px;height: 30px;" minlength="5" maxlength="20" title="maximum length of email is 20">
 <br>
 <?php
-$conn=mysqli_connect('localhost','root','root','mydatabase');
-
-if(!$conn)
-{
-	echo "connection failed";
-}
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $email = $_POST['email'];
@@ -40,39 +34,12 @@ if(mysqli_num_rows($check_email)> 0)
 }
 else
 {
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") 
-    // {
+   
     $result = mysqli_query($conn, "INSERT INTO `mydatatable`(`firstname`, `lastname`, `email`, `password`) VALUES ('$firstname','$lastname','$email','$password')");
-    // }
-    ?><span style="color:red;"><?php echo('New Email Registered'); ?></span></br><?php
+    ?><span style="color:green;"><?php echo('New Email Registered'); ?></span></br><?php
 }
-
-// $un = $_POST['email'];
-// $pw = $_POST['pwd'];
-//     print $un . "_" . $pw;
-
-//     $query = mysqli_query($conn, "SELECT `email`, `password` FROM mydatatable WHERE email='$un' AND password='$pw'");
-
-//     $result_can = mysqli_query($conn, $query);
-
-
-//     while ($row = mysql_fetch_assoc($result_can)) {
-
-
-//         $check_username = $row['email'];
-//         $check_password = $row['password'];
-//     }
-//     if ($un == $check_username && $pw == $check_password) {
-//         $message = "sucessfully login";
-//         echo "<script type='text/javascript'>alert('$message');</script>";
-//         header("Location: afterlogin.php");
-//     } else {
-//         $message = "incorrect username and password";
-//         echo "<script type='text/javascript'>alert('$message');</script>";
-//         header("Location: log_in.php");
-//     }
 ?>
-</input></br>
+</br>
 <label style="margin-left:-120px;">Password: </label><br>
 <input type="password" name="pwd" required style="margin-top: 10px;width: 200px;height: 30px;"  minlength="5" maxlength="10" title="maximum length of password is 10">
 <br>

@@ -1,3 +1,4 @@
+<?php include('register.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,58 +17,33 @@
 <label style="margin-left:-120px;">Password : </label><br>
 <input type="password" name="pwd" required style="margin-top: 10px;width: 200px;height: 30px;" minlength="3" maxlength="10" title="maximum length of password is 12">
 <br><br>
-<?php
-$conn=mysqli_connect('localhost','root','root','mydatabase');
+<button type="submit" name="submit" id="submit" style="height: 35px;width: 60px; background-color: #FF98CF;color: white;border-radius: 5px;">Login</button><br><br>
+<?php 
 
-if(!$conn)
-{
-	echo "connection failed";
-}
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname'];
-$email = $_POST['email'];
-$password = $_POST['pwd'];
+$email=$_POST['email'];
+$pass=$_POST['pwd'];
+// echo $email;
+// echo $pass;
+mysqli_select_db("mydatabase");
+$db=mysqli_query($conn,"SELECT `email`, `password` FROM `mydatatable`");
 
-$check_email = mysqli_query($conn, " SELECT `email` FROM `mydatatable` WHERE email='$email'");
-if(mysqli_num_rows($check_email)> 0)
+while($row=mysqli_fetch_array($db))
 {
-    ?><span style="color:red;"><?php echo('Email Already exists'); ?></span></br></br><?php
+	$emails=$row['email'];
+	$passwords=$row['password'];
+	// echo $email1;
+	// echo $password1;
 }
+if($email == $emails && $pass == $passwords)
+{
+  ?><span style="color:green;font-size: 20px;"><?php echo "login successfully, Move to next page"; ?><?php echo "<script> window.location.assign('afterlogin.php');</script>" ?> </span><?php
+ }  
 else
 {
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") 
-    // {
-    $result = mysqli_query($conn, "INSERT INTO `mydatatable`(`firstname`, `lastname`, `email`, `password`) VALUES ('$firstname','$lastname','$email','$password')");
-    // }
-    ?><span style="color:red;"><?php echo('New Email Registered'); ?></span></br><?php
-}
+   ?><span style="color:red;font-size: 20px;"><?php echo "Invalid email and password, Please Register Properly"; ?><?php echo "<script> window.location.assign('log_in.php');</script>" ?></span><?php
+ }
 
-// $un = $_POST['email'];
-// $pw = $_POST['pwd'];
-//     print $un . "_" . $pw;
-
-//     $query = mysqli_query($conn, "SELECT `email`, `password` FROM mydatatable WHERE email='$un' AND password='$pw'");
-
-//     $result_can = mysqli_query($conn, $query);
-
-
-//     while ($row = mysql_fetch_assoc($result_can)) {
-
-
-//         $check_username = $row['email'];
-//         $check_password = $row['password'];
-//     }
-//     if ($un == $check_username && $pw == $check_password) {
-//         $message = "sucessfully login";
-//         echo "<script type='text/javascript'>alert('$message');</script>";
-//         header("Location: afterlogin.php");
-//     } else {
-//         $message = "incorrect username and password";
-//         echo "<script type='text/javascript'>alert('$message');</script>";
-//         header("Location: log_in.php");
-//     }
 ?>
-<button type="submit" style="height: 35px;width: 60px; background-color: #FF98CF;color: white;border-radius: 5px;">Login</button>
 <p>Don't have an account <b><a href="details.php">Register</a></b></p>
 </fieldset>
 </div>
